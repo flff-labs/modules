@@ -1,0 +1,51 @@
+{:default
+ {:feature-requires [:base :postgres]
+  :require-restart? true
+  :actions
+  {:assets     ["resources/migrations"]
+   :injections [{:type   :edn
+                 :path   "resources/system.edn"
+                 :target []
+                 :action :merge
+                 :value  {:db.sql/migrations {:store            :database
+                                              :db               {:datasource #ig/ref :db.sql/connection}
+                                              :migrate-on-init? true}}}
+                {:type   :edn
+                 :path   "deps.edn"
+                 :target [:deps]
+                 :action :merge
+                 :value  {com.github.seancorfield/honeysql {:mvn/version "2.6.1196"}
+                          io.github.kit-clj/kit-sql-conman   {:mvn/version "1.10.4"}
+                          io.github.kit-clj/kit-sql-migratus {:mvn/version "1.0.4"}}}
+                {:type   :clj
+                 :path   "src/clj/<<sanitized>>/core.clj"
+                 :action :append-requires
+                 :value  ["[honey.sql :as sql]"
+                          "[honey.sql.helpers :as h]"
+                          "[kit.edge.db.sql.conman]"
+                          "[kit.edge.db.sql.migratus]"]}]}}
+
+ :postgres
+ {:feature-requires [:base]
+  :actions
+  {:injections [{:type   :edn
+                 :path   "resources/system.edn"
+                 :target []
+                 :action :merge
+                 :value  {:db.sql/connection
+                          {:jdbcUrl   (or (System/getenv "DATABASE_URL")
+                                          "postgresql://localhost/<<sanitized>>?user=<<sanitized>>&password=")
+                           :init-size 1
+                           :min-idle  1
+                           :max-idle  4
+                           :max-active 32}}}
+                {:type   :edn
+                 :path   "deps.edn"
+                 :target [:deps]
+                 :action :merge
+                 :value  {io.github.kit-clj/kit-postgres {:mvn/version "1.0.4"}
+                          org.postgresql/postgresql       {:mvn/version "42.7.2"}}}
+                {:type   :clj
+                 :path   "src/clj/<<sanitized>>/core.clj"
+                 :action :append-requires
+                 :value  ["[kit.edge.db.postgres]"]}]}}}
