@@ -1,0 +1,9 @@
+{:name "flff-modules"
+ :modules
+ {:flff/honey-sql
+  {:path "honey-sql"
+   :doc "adds support for HoneySQL with PostgreSQL migrations"}
+  :flff/flff
+  {:path "flff"
+   :doc "adds FLFF system with CLJS support and database migrations"}}}
+

@@ -1,0 +1,10 @@
+{:default
+ {:requires [:flff/honey-sql :kit/cljs]
+  :require-restart? true
+  :actions
+  {:assets     [["assets/src/core.cljs" "src/cljs/<<ns-name>>/app/core.cljs"]
+                ["assets/src/app/ui/main.clj" "src/clj/<<ns-name>>/app/ui/main.clj"]
+                ["assets/src/app/routes.clj" "src/clj/<<ns-name>>/app/routes.clj"]
+                ["assets/src/app/state.clj" "src/clj/<<ns-name>>/app/state.clj"]
+                ["assets/000-flff.sql" "resources/migrations/000-flff.sql"]]
+   :injections []}}}

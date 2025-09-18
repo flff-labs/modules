@@ -1,5 +1,5 @@
 {:default
- {:feature-requires [:base :postgres]
+ {:feature-requires [:postgres]
   :require-restart? true
   :actions
   {:assets     ["resources/migrations"]
@@ -26,7 +26,7 @@
                           "[kit.edge.db.sql.migratus]"]}]}}
 
  :postgres
- {:feature-requires [:base]
+ {:feature-requires []
   :actions
   {:injections [{:type   :edn
                  :path   "resources/system.edn"
